@@ -112,19 +112,3 @@ public class App {
         
     }
 }
-
-/* Definitely want to incorporate this into the game
-    
-    System.out.println("You are in a dark room. There is a door to your right and left.");
-    System.out.println("Which one do you take?");
-
-    Other ideas:
-    - Make the enemy health greater than 25 as a base state
-    - Have different player classes
-    - Allow player to level up
-    - Allow player to choose a weapon
-    - Incorporate different enemy stats based on their names
-    - Introduce different locations for the player to travel to in the city
-    - Fix the health potion drop percentage
-    - Fix game's text format
-*/
