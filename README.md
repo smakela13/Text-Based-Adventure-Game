@@ -1,7 +1,25 @@
 # Text-Based Adventure Game
 
-The game is written using Java and will explore a city with all sorts of enemies.
+## Table of Contents
 
+* [Description](#description)
+* [Usage](#usage)
+* [Credits](#credits)
+* [Ideas](#ideas)
+
+## Description
+
+The game is written using Java and will explore a city with all sorts of supernatural enemies.
+
+## Usage
+
+Coming soon.
+
+## Credits
+
+Created by [Soma Makela](https://github.com/smakela13).
+
+## Ideas
 
 Definitely want to incorporate this type of movement into the game: 
    "You are in a dark room. There is a door to your right and left."
