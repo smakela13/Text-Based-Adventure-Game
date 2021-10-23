@@ -8,11 +8,6 @@ public class App {
         Random rand = new Random();
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
-        // Enemy variables
-        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
-        int maxEnemyHealth = 100;
-        int enemyAttackDamage = 30;
-
         // Player variables
         int playerHealth = 100;
         int playerAttackDamage = 50;
@@ -107,7 +102,7 @@ public class App {
             }
         }
         input.close();
-        
+
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         System.out.println("Thanks for playing!");
         System.out.println("~~~~~~~~~~~~~~~~~~~");
