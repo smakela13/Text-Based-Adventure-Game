@@ -3,9 +3,10 @@ import java.util.Scanner;
 
 public class App {
     public static void main(String[] args) {
-        // System objects
+        // System objects and variables
         Scanner input = new Scanner(System.in);
         Random rand = new Random();
+        String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         // Enemy variables
         String[] enemies = {"Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter"};
@@ -26,9 +27,7 @@ public class App {
 
         GAME:
         while (gameOn) {
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            System.out.println("You are in a dark room. There is a door to your right and left.");
-            System.out.println("Which one do you take?");
+            System.out.println(stylizedLine);
 
             int enemyHealth = rand.nextInt(maxEnemyHealth);
             String enemy = enemies[rand.nextInt(enemies.length)];
@@ -79,7 +78,7 @@ public class App {
                 System.out.println("\tYou limp into the shadows weak and bloody.");
                 break;
             }
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(stylizedLine);
             System.out.println("\t ## The " + enemy + " has been defeated!");
             System.out.println("\tYou have " + playerHealth + " health left.");
             if (rand.nextInt(100) < playerHealthPotionDropPercentage) {
@@ -87,7 +86,7 @@ public class App {
                 System.out.println("\tThe " + enemy + " has dropped a health potion!");
                 System.out.println("\tYou now have " + playerHealthPotions + " health potions.");
             } 
-            System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t1. Continue deeper into the city.");
             System.out.println("\t2. Live to fight another day.");
@@ -111,3 +110,17 @@ public class App {
         
     }
 }
+
+/* Definitely want to incorporate this into the game
+    
+    System.out.println("You are in a dark room. There is a door to your right and left.");
+    System.out.println("Which one do you take?");
+
+    Other ideas:
+    - Make the enemy health greater than 25 as a base state
+    - Have different player classes
+    - Incorporate different enemy stats based on their names
+    - Introduce different locations for the player to travel to in the city
+    - Fix the health potion drop percentage
+    - Fix game's text format
+*/
