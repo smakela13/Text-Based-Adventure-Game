@@ -97,14 +97,13 @@ public class App {
             while (!choice.equals("1") && !choice.equals("2")) {
                 System.out.println("\tPlease enter a valid choice.");
                 choice = input.nextLine();
-
+            }
                 if (choice.equals("1")) {
                     System.out.println("You continue your fight through the city.");
                 } else if (choice.equals("2")) {
-                    System.out.println("You head home, keeping an eye on your rearview mirror.");
+                    System.out.println("You head home, successful in your battles, but you keep an eye on your rearview mirror. Just in case.");
                     break;
                 }
-            }
         }
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         System.out.println("Thanks for playing!");
