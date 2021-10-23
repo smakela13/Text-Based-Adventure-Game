@@ -9,7 +9,7 @@ public class App {
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         // Enemy variables
-        String[] enemies = {"Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter"};
+        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
         int maxEnemyHealth = 100;
         int enemyAttackDamage = 30;
 
@@ -25,8 +25,7 @@ public class App {
 
         System.out.println("\t~* Welcome to the Darkness! *~");
 
-        GAME:
-        while (gameOn) {
+        GAME: while (gameOn) {
             System.out.println(stylizedLine);
 
             int enemyHealth = rand.nextInt(maxEnemyHealth);
@@ -75,7 +74,7 @@ public class App {
                     System.out.println("\tPlease enter a valid choice.");
                 }
             }
-            
+
             if (playerHealth < 1) {
                 System.out.println("\tYou limp into the shadows weak and bloody.");
                 break;
@@ -87,7 +86,7 @@ public class App {
                 playerHealthPotions++;
                 System.out.println("\tThe " + enemy + " has dropped a health potion!");
                 System.out.println("\tYou now have " + playerHealthPotions + " health potions.");
-            } 
+            }
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t1. Continue deeper into the city.");
@@ -99,16 +98,18 @@ public class App {
                 System.out.println("\tPlease enter a valid choice.");
                 choice = input.nextLine();
             }
-                if (choice.equals("1")) {
-                    System.out.println("You continue your fight through the city.");
-                } else if (choice.equals("2")) {
-                    System.out.println("You head home, successful in your battles, but you keep an eye on your rearview mirror. Just in case.");
-                    break;
-                }
+            if (choice.equals("1")) {
+                System.out.println("You continue your fight through the city.");
+            } else if (choice.equals("2")) {
+                System.out.println(
+                        "You head home, successful in your battles, but you keep an eye on your rearview mirror. Just in case.");
+                break;
+            }
         }
+        input.close();
+        
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         System.out.println("Thanks for playing!");
         System.out.println("~~~~~~~~~~~~~~~~~~~");
-        
     }
 }
