@@ -23,7 +23,7 @@ public class App {
         // Game running boolean
         boolean gameOn = true;
 
-        System.out.println("Welcome to the Darkness!");
+        System.out.println("\t~* Welcome to the Darkness! *~");
 
         GAME:
         while (gameOn) {
@@ -31,11 +31,12 @@ public class App {
 
             int enemyHealth = rand.nextInt(maxEnemyHealth);
             String enemy = enemies[rand.nextInt(enemies.length)];
-            System.out.println("\t ## You have found a " + enemy + "!\n");
+            System.out.println("\t~* You have found a " + enemy + "! *~\n");
 
             while (enemyHealth > 0) {
                 System.out.println("\tYour health is " + playerHealth + ".");
-                System.out.println("\tThe " + enemy + "'s health is " + enemyHealth + ".");
+                System.out.println("\tThe " + enemy + "'s health is " + enemyHealth + ".\n");
+                System.out.println(stylizedLine);
                 System.out.println("What would you like to do?");
                 System.out.println("1. Attack!");
                 System.out.println("2. Drink a health potion.");
@@ -49,8 +50,9 @@ public class App {
                     enemyHealth -= damageDealt;
                     playerHealth -= damageTaken;
 
+                    System.out.println(stylizedLine);
                     System.out.println("\tYou dealt " + damageDealt + " damage to the " + enemy + ".");
-                    System.out.println("\tThe " + enemy + " dealt " + damageTaken + " damage to you in retaliation.");
+                    System.out.println("\tThe " + enemy + " dealt " + damageTaken + " damage to you in return.\n");
 
                     if (playerHealth < 1) {
                         System.out.println("\tYou have taken too much damage.");
@@ -119,6 +121,8 @@ public class App {
     Other ideas:
     - Make the enemy health greater than 25 as a base state
     - Have different player classes
+    - Allow player to level up
+    - Allow player to choose a weapon
     - Incorporate different enemy stats based on their names
     - Introduce different locations for the player to travel to in the city
     - Fix the health potion drop percentage
