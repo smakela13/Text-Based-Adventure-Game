@@ -57,7 +57,7 @@ public class App {
                         System.out.println("\tYou have taken too much damage.");
                         break GAME;
                     }
-                } else if (input.equals("2")) {
+                } else if (choice.equals("2")) {
                     if (playerHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
                         playerHealthPotions--;
@@ -67,7 +67,7 @@ public class App {
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
-                } else if (input.equals("3")) {
+                } else if (choice.equals("3")) {
                     System.out.println("\tYou have run away from the " + enemy + ".");
                     continue GAME;
                 } else {
@@ -97,14 +97,14 @@ public class App {
             while (!choice.equals("1") && !choice.equals("2")) {
                 System.out.println("\tPlease enter a valid choice.");
                 choice = input.nextLine();
-            }
 
-            if (input.equals("1")) {
-                System.out.println("You continue your fight through the city.");
-            } else if(input.equals("2")) {
-                System.out.println("You head home, keeping an eye on your rearview mirror.");
-                break;
-            }   
+                if (choice.equals("1")) {
+                    System.out.println("You continue your fight through the city.");
+                } else if (choice.equals("2")) {
+                    System.out.println("You head home, keeping an eye on your rearview mirror.");
+                    break;
+                }
+            }
         }
         System.out.println("~~~~~~~~~~~~~~~~~~~");
         System.out.println("Thanks for playing!");
