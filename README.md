@@ -17,7 +17,7 @@ Coming soon.
 
 ## Credits
 
-Created by [Soma Makela](https://github.com/smakela13).
+Created by [Soma Mäkelä](https://github.com/smakela13).
 
 ## Ideas
 
@@ -30,9 +30,8 @@ Definitely want to incorporate this type of movement into the game:
    - Have different player classes
    - Allow player to level up
    - Allow player to choose a weapon
-   - Incorporate different enemy stats based on their names
+   - Incorporate different enemy stats based on their names/types
    - Introduce different locations for the player to travel to in the city
-   - Fix the health potion drop percentage
    - Continue to refine the game's text format
    - Add a story line
    - Add colors to the console text

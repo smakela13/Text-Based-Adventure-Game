@@ -4,16 +4,21 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) {
         // System objects and variables
-        Scanner input = new Scanner(System.in);
-        Random rand = new Random();
+        final Scanner input = new Scanner(System.in);
+        final Random rand = new Random();
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         // Player variables
         int playerHealth = 100;
-        int playerAttackDamage = 50;
-        int playerHealthPotions = 30;
+        int playerMaxAttackDamage = 50;
+        int playerHealthPotions = 1;
         int playerHealthPotionHealAmount = 30;
         int playerHealthPotionDropPercentage = 25;
+
+        // Enemy variables
+        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
+        int maxEnemyHealth = 100;
+        int enemyMaxAttackDamage = 30;
 
         // Game running boolean
         boolean gameOn = true;
@@ -25,28 +30,33 @@ public class App {
 
             int enemyHealth = rand.nextInt(maxEnemyHealth);
             String enemy = enemies[rand.nextInt(enemies.length)];
-            System.out.println("\t~* You have found a " + enemy + "! *~\n");
+            String enemyFoundString = String.format("\t~* You have found a %s! *~", enemy);
+            System.out.println(enemyFoundString);
 
             while (enemyHealth > 0) {
-                System.out.println("\tYour health is " + playerHealth + ".");
-                System.out.println("\tThe " + enemy + "'s health is " + enemyHealth + ".\n");
+                String playerHealthString = String.format("\tYour health is %d.", playerHealth);
+                System.out.println(playerHealthString);
+                String enemyHealthString = String.format("\tThe %s's health is %d.", enemy, enemyHealth);
+                System.out.println(enemyHealthString);
                 System.out.println(stylizedLine);
                 System.out.println("What would you like to do?");
                 System.out.println("1. Attack!");
                 System.out.println("2. Drink a health potion.");
                 System.out.println("3. Run!");
 
-                String choice = input.nextLine();
+                String choice = input.nextLine().trim();
                 if (choice.equals("1")) {
-                    int damageDealt = rand.nextInt(playerAttackDamage);
-                    int damageTaken = rand.nextInt(enemyAttackDamage);
+                    int damageDealt = rand.nextInt(playerMaxAttackDamage);
+                    int damageTaken = rand.nextInt(enemyMaxAttackDamage);
 
                     enemyHealth -= damageDealt;
                     playerHealth -= damageTaken;
 
                     System.out.println(stylizedLine);
-                    System.out.println("\tYou dealt " + damageDealt + " damage to the " + enemy + ".");
-                    System.out.println("\tThe " + enemy + " dealt " + damageTaken + " damage to you in return.\n");
+                    String damageDealtString = String.format("\tYou dealt %d damage to the %s.", damageDealt, enemy);
+                    System.out.println(damageDealtString);
+                    String damageTakenString = String.format("\tThe %s dealt %d damage to you in return.", enemy, damageTaken);
+                    System.out.println(damageTakenString);
 
                     if (playerHealth < 1) {
                         System.out.println("\tYou have taken too much damage.");
@@ -56,14 +66,14 @@ public class App {
                     if (playerHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
                         playerHealthPotions--;
-                        System.out.println("\tYou have healed yourself for " + playerHealthPotionHealAmount + " health."
-                                + "\n\t You now have " + playerHealth + " health." + "\n\t You now have "
-                                + playerHealthPotions + " health potions.\n");
+                        String healingHealthPotionDrankString = String.format("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.", playerHealthPotionHealAmount, playerHealth, playerHealthPotions);
+                        System.out.println(healingHealthPotionDrankString);
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
                 } else if (choice.equals("3")) {
-                    System.out.println("\tYou have run away from the " + enemy + ".");
+                    String ranAwayString = String.format("\tYou ran away from the %s.", enemy);
+                    System.out.println(ranAwayString);
                     continue GAME;
                 } else {
                     System.out.println("\tPlease enter a valid choice.");
@@ -75,30 +85,32 @@ public class App {
                 break;
             }
             System.out.println(stylizedLine);
-            System.out.println("\t ## The " + enemy + " has been defeated!");
-            System.out.println("\tYou have " + playerHealth + " health left.");
+            String enemyDefeatedString = String.format("\tYou have defeated the %s!", enemy);
+            System.out.println(enemyDefeatedString);
+            String playerHealthString = String.format("\tYour health is %d.", playerHealth);
+            System.out.println(playerHealthString);
             if (rand.nextInt(100) < playerHealthPotionDropPercentage) {
                 playerHealthPotions++;
-                System.out.println("\tThe " + enemy + " has dropped a health potion!");
-                System.out.println("\tYou now have " + playerHealthPotions + " health potions.");
+                String healthPotionDroppedString = String.format("\tThe %s dropped a health potion!%n You now have %d health potions.", enemy, playerHealthPotions);
+                System.out.println(healthPotionDroppedString);
             }
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t1. Continue deeper into the city.");
             System.out.println("\t2. Live to fight another day.");
 
-            String choice = input.nextLine();
+            String choice = input.nextLine().trim();
 
             while (!choice.equals("1") && !choice.equals("2")) {
                 System.out.println("\tPlease enter a valid choice.");
-                choice = input.nextLine();
+                choice = input.nextLine().trim();
             }
             if (choice.equals("1")) {
                 System.out.println("You continue your fight through the city.");
             } else if (choice.equals("2")) {
                 System.out.println(
                         "You head home, successful in your battles, but you keep an eye on your rearview mirror. Just in case.");
-                break;
+                gameOn = false;
             }
         }
         input.close();
