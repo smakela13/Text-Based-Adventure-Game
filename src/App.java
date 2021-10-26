@@ -8,17 +8,17 @@ public class App {
         final Random rand = new Random();
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
+        // Enemy variables
+        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
+        int maxEnemyHealth = 100;
+        int enemyMaxAttackDamage = 30;
+
         // Player variables
         int playerHealth = 100;
         int playerMaxAttackDamage = 50;
         int playerHealthPotions = 1;
         int playerHealthPotionHealAmount = 30;
         int playerHealthPotionDropPercentage = 25;
-
-        // Enemy variables
-        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
-        int maxEnemyHealth = 100;
-        int enemyMaxAttackDamage = 30;
 
         // Game running boolean
         boolean gameOn = true;
