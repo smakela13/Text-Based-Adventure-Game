@@ -7,6 +7,7 @@ public class Enemy {
    int maxEnemyHealth = 100;
    int enemyMaxAttackDamage = 30;
    private String enemyType;
+   private int enemyHealth;
    int healthPotionDropPercentage = 25;
    int enemyDroppedHealthPotions = 1;
    int healthPotionHealAmount = 30;
@@ -16,46 +17,44 @@ public class Enemy {
    // Enemy appears to Player
    public void selectRandomEnemy() {
       setEnemyType(enemies[rand.nextInt(enemies.length)]);
-      String enemyFoundString = String.format("\t~* You found a %s! *~", enemyType);
-      System.out.println(enemyFoundString);
+      System.out.printf("\t~* You found a %s! *~%n", enemyType);
    }
 
    // Enemy's health revealed to Player
    public void discoverEnemyHealth() {
-      int enemyHealth = rand.nextInt(maxEnemyHealth);
-      String enemyHealthString = String.format("\tThe %s has %d health.", enemyType, enemyHealth);
-      System.out.println(enemyHealthString);
+      this.enemyHealth = rand.nextInt(maxEnemyHealth);
+      System.out.printf("\tThe %s has %d health.%n", enemyType, enemyHealth);
    }
 
    // Enemy (potentially) deals damage to Player
-   public void damageDealtEnemy() {
+   public int damageDealtEnemy() {
       int enemyDamageDealt = rand.nextInt(enemyMaxAttackDamage);
-      String enemyDamageDealtString = String.format("\tThe %s deals %d damage to you in return.", enemyType,
-            enemyDamageDealt);
-      System.out.println(enemyDamageDealtString);
+      System.out.printf("\tThe %s deals %d damage to you in return.%n", enemyType, enemyDamageDealt);
+      // Return damage dealt to the round logic
+      // Round logic will then use this to deal damage to the player
+      return enemyDamageDealt;
    }
 
-   // Enemy (potentially) takes damage from Player
-   // public void damageTakenEnemy() {
-
-   // }
-
+   // Enemy (potentially) takes damage from Player (needs to be implemented here)
    // Enemy's health is updated (needs to be implemented here)
+   public int damageTakenEnemy(int enemyDamageTaken) {
+      this.enemyHealth -= enemyDamageTaken;
+      System.out.printf("\tThe %s deals %d damage to you in return.%n", enemyType, enemyDamageTaken);
+      
+      return enemyDamageTaken;
+   }
 
    // Enemy (potentially) kills Player (needs to be implemented here)
 
    // Enemy (potentially) dies and drops a health potion
    public void enemyDefeatedPotionDropChance() {
-      String enemyDefeatedString = String.format("\tYou have defeated the %s!", enemyType);
-      System.out.println(enemyDefeatedString);
+      System.out.printf("\tYou have defeated the %s!%n", enemyType);
 
       int potionDropChance = rand.nextInt(100);
       if (potionDropChance < healthPotionDropPercentage) {
          enemyDroppedHealthPotions++;
-         String healthPotionDroppedString = String.format(
-               "\tThe %s dropped a health potion!%n You now have %d health potions.", enemyType,
-               enemyDroppedHealthPotions);
-         System.out.println(healthPotionDroppedString);
+         System.out.printf("\tThe %s dropped a health potion!%n You now have %d health potions.%n", enemyType,
+            enemyDroppedHealthPotions);
       }
    }
 
@@ -67,4 +66,13 @@ public class Enemy {
    public void setEnemyType(String enemyType) {
       this.enemyType = enemyType;
    }
+
+   public int getEnemyHealth() {
+      return enemyHealth;
+   }
+
+   public void setEnemyHealth(int enemyHealth) {
+      this.enemyHealth = enemyHealth;
+   }
+   
 }
