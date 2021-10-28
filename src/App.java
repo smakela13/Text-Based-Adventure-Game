@@ -9,16 +9,13 @@ public class App {
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         // Enemy variables
-        String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
         int maxEnemyHealth = 100;
         int enemyMaxAttackDamage = 30;
 
         // Player variables
         int playerHealth = 100;
         int playerMaxAttackDamage = 50;
-        int playerHealthPotions = 1;
         int playerHealthPotionHealAmount = 30;
-        int playerHealthPotionDropPercentage = 25;
 
         // Game running boolean
         boolean gameOn = true;
@@ -28,16 +25,16 @@ public class App {
         GAME: while (gameOn) {
             System.out.println(stylizedLine);
 
+            Enemy enemy = new Enemy();
+            enemy.selectRandomEnemy();
             int enemyHealth = rand.nextInt(maxEnemyHealth);
-            String enemy = enemies[rand.nextInt(enemies.length)];
-            String enemyFoundString = String.format("\t~* You have found a %s! *~", enemy);
-            System.out.println(enemyFoundString);
 
             while (enemyHealth > 0) {
                 String playerHealthString = String.format("\tYour health is %d.", playerHealth);
                 System.out.println(playerHealthString);
-                String enemyHealthString = String.format("\tThe %s's health is %d.", enemy, enemyHealth);
-                System.out.println(enemyHealthString);
+                
+                enemy.discoverEnemyHealth();
+                
                 System.out.println(stylizedLine);
                 System.out.println("What would you like to do?");
                 System.out.println("1. Attack!");
@@ -55,18 +52,18 @@ public class App {
                     System.out.println(stylizedLine);
                     String damageDealtString = String.format("\tYou dealt %d damage to the %s.", damageDealt, enemy);
                     System.out.println(damageDealtString);
-                    String damageTakenString = String.format("\tThe %s dealt %d damage to you in return.", enemy, damageTaken);
-                    System.out.println(damageTakenString);
+                    
+                    enemy.damageDealtEnemy();
 
                     if (playerHealth < 1) {
                         System.out.println("\tYou have taken too much damage.");
                         break GAME;
                     }
                 } else if (choice.equals("2")) {
-                    if (playerHealthPotions > 0) {
+                    if (enemy.enemyDroppedHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
-                        playerHealthPotions--;
-                        String healingHealthPotionDrankString = String.format("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.", playerHealthPotionHealAmount, playerHealth, playerHealthPotions);
+                        enemy.enemyDroppedHealthPotions--;
+                        String healingHealthPotionDrankString = String.format("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.", playerHealthPotionHealAmount, playerHealth, enemy.enemyDroppedHealthPotions);
                         System.out.println(healingHealthPotionDrankString);
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
@@ -85,15 +82,9 @@ public class App {
                 break;
             }
             System.out.println(stylizedLine);
-            String enemyDefeatedString = String.format("\tYou have defeated the %s!", enemy);
-            System.out.println(enemyDefeatedString);
             String playerHealthString = String.format("\tYour health is %d.", playerHealth);
             System.out.println(playerHealthString);
-            if (rand.nextInt(100) < playerHealthPotionDropPercentage) {
-                playerHealthPotions++;
-                String healthPotionDroppedString = String.format("\tThe %s dropped a health potion!%n You now have %d health potions.", enemy, playerHealthPotions);
-                System.out.println(healthPotionDroppedString);
-            }
+            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t1. Continue deeper into the city.");
