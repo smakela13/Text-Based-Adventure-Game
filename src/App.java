@@ -6,7 +6,7 @@ public class App {
         // System objects and variables
         final Scanner input = new Scanner(System.in);
         final Random rand = new Random();
-        String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
+        String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
         // Enemy variables
         int maxEnemyHealth = 100;
@@ -64,7 +64,7 @@ public class App {
                     if (playerHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
                         playerHealthPotions--;
-                        System.out.printf("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.%n", playerHealthPotionHealAmount, playerHealth, playerHealthPotions);
+                        System.out.printf("\tYou drank a health potion.%n \tYour health is now %d.%n \tYou have %d health potions.%n", playerHealth, playerHealthPotions);
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
