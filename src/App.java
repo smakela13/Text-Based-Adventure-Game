@@ -14,6 +14,7 @@ public class App {
         // Player variables
         int playerHealth = 100;
         int playerMaxAttackDamage = 50;
+        int playerHealthPotions = 1;
         int playerHealthPotionHealAmount = 30;
 
         // Game running boolean
@@ -51,11 +52,8 @@ public class App {
                     System.out.printf("\tYou dealt %d damage to the %s.%n", damageDealt, enemy.getEnemyType());
 
                     damageTaken = enemy.damageDealtEnemy();
-
-                    enemyHealth -= damageDealt;
+                    enemyHealth = enemy.damageTakenEnemy(damageDealt);
                     playerHealth -= damageTaken;
-
-                    // Make enemy's health update to appropriate amount
 
                     if (playerHealth < 1) {
                         System.out.println("\tYou have taken too much damage.");
@@ -63,10 +61,10 @@ public class App {
                     }
                     break;
                 case "2":
-                    if (enemy.enemyDroppedHealthPotions > 0) {
+                    if (playerHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
-                        enemy.enemyDroppedHealthPotions--;
-                        System.out.printf("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.%n", playerHealthPotionHealAmount, playerHealth, enemy.enemyDroppedHealthPotions);
+                        playerHealthPotions--;
+                        System.out.printf("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.%n", playerHealthPotionHealAmount, playerHealth, playerHealthPotions);
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
@@ -74,7 +72,9 @@ public class App {
                 case "3":
                     System.out.printf("\tYou ran away from the %s!%n", enemy);
                     continue GAME;
-                // figure out how to handle default case/invalid input since break is not working for case "3"
+                default:
+                    System.out.println("\tPlease enter a valid input.");
+                    break;
                 }
             }
 
@@ -83,8 +83,10 @@ public class App {
                 break;
             }
             System.out.println(stylizedLine);
-            System.out.printf("\tYour health is %d.%n", playerHealth);
-            
+            if (enemyHealth < 1) {
+                playerHealthPotions += enemy.enemyDefeatedPotionDropChance();
+            }
+            System.out.printf("\tYour health is %d.%n", playerHealth);            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t1. Continue deeper into the city.");
