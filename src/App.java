@@ -10,7 +10,6 @@ public class App {
 
         // Enemy variables
         int maxEnemyHealth = 100;
-        int enemyMaxAttackDamage = 30;
 
         // Player variables
         int playerHealth = 100;
@@ -30,50 +29,52 @@ public class App {
             int enemyHealth = rand.nextInt(maxEnemyHealth);
 
             while (enemyHealth > 0) {
-                String playerHealthString = String.format("\tYour health is %d.", playerHealth);
-                System.out.println(playerHealthString);
+                System.out.println();
+                System.out.printf("\tYour health is %d.%n", playerHealth);
                 
                 enemy.discoverEnemyHealth();
                 
                 System.out.println(stylizedLine);
-                System.out.println("What would you like to do?");
-                System.out.println("1. Attack!");
-                System.out.println("2. Drink a health potion.");
-                System.out.println("3. Run!");
+                System.out.println("\tWhat would you like to do?");
+                System.out.println("\t1. Attack!");
+                System.out.println("\t2. Drink a health potion.");
+                System.out.println("\t3. Run!");
 
                 String choice = input.nextLine().trim();
-                if (choice.equals("1")) {
+                
+                switch (choice) {
+                case "1":
                     int damageDealt = rand.nextInt(playerMaxAttackDamage);
-                    int damageTaken = rand.nextInt(enemyMaxAttackDamage);
+                    int damageTaken;
+
+                    System.out.println(stylizedLine);
+                    System.out.printf("\tYou dealt %d damage to the %s.%n", damageDealt, enemy.getEnemyType());
+
+                    damageTaken = enemy.damageDealtEnemy();
 
                     enemyHealth -= damageDealt;
                     playerHealth -= damageTaken;
 
-                    System.out.println(stylizedLine);
-                    String damageDealtString = String.format("\tYou dealt %d damage to the %s.", damageDealt, enemy);
-                    System.out.println(damageDealtString);
-                    
-                    enemy.damageDealtEnemy();
+                    // Make enemy's health update to appropriate amount
 
                     if (playerHealth < 1) {
                         System.out.println("\tYou have taken too much damage.");
                         break GAME;
                     }
-                } else if (choice.equals("2")) {
+                    break;
+                case "2":
                     if (enemy.enemyDroppedHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
                         enemy.enemyDroppedHealthPotions--;
-                        String healingHealthPotionDrankString = String.format("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.", playerHealthPotionHealAmount, playerHealth, enemy.enemyDroppedHealthPotions);
-                        System.out.println(healingHealthPotionDrankString);
+                        System.out.printf("\tYou drank a health potion.%n You have healed yourself for %d.%n Your health is now %d.%n You now have %d health potions.%n", playerHealthPotionHealAmount, playerHealth, enemy.enemyDroppedHealthPotions);
                     } else {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
-                } else if (choice.equals("3")) {
-                    String ranAwayString = String.format("\tYou ran away from the %s.", enemy);
-                    System.out.println(ranAwayString);
+                    break;
+                case "3":
+                    System.out.printf("\tYou ran away from the %s!%n", enemy);
                     continue GAME;
-                } else {
-                    System.out.println("\tPlease enter a valid choice.");
+                // figure out how to handle default case/invalid input since break is not working for case "3"
                 }
             }
 
@@ -82,8 +83,7 @@ public class App {
                 break;
             }
             System.out.println(stylizedLine);
-            String playerHealthString = String.format("\tYour health is %d.", playerHealth);
-            System.out.println(playerHealthString);
+            System.out.printf("\tYour health is %d.%n", playerHealth);
             
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
@@ -92,22 +92,23 @@ public class App {
 
             String choice = input.nextLine().trim();
 
-            while (!choice.equals("1") && !choice.equals("2")) {
-                System.out.println("\tPlease enter a valid choice.");
-                choice = input.nextLine().trim();
-            }
-            if (choice.equals("1")) {
-                System.out.println("You continue your fight through the city.");
-            } else if (choice.equals("2")) {
-                System.out.println(
-                        "You head home, successful in your battles, but you keep an eye on your rearview mirror. Just in case.");
-                gameOn = false;
+            switch (choice) {
+                case "1":
+                    System.out.println("\tYou continue your fight through the city.");
+                    break;
+                case "2":
+                    System.out.println("\tYou live to fight another day.");
+                    gameOn = false;
+                    break;
+                default:
+                    System.out.println("\tPlease enter a valid choice.");
+                    break;
             }
         }
         input.close();
 
-        System.out.println("~~~~~~~~~~~~~~~~~~~");
-        System.out.println("Thanks for playing!");
-        System.out.println("~~~~~~~~~~~~~~~~~~~");
+        System.out.println(stylizedLine);
+        System.out.println("\tThanks for playing!");
+        System.out.println(stylizedLine);
     }
 }
