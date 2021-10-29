@@ -29,19 +29,18 @@ public class Enemy {
    public int damageDealtEnemy() {
       int enemyDamageDealt = rand.nextInt(enemyMaxAttackDamage);
       System.out.printf("\tThe %s deals %d damage to you in return.%n", enemyType, enemyDamageDealt);
-      // Return damage dealt to the fight logic
-      // Fight logic will then use this to deal damage to the player
+      // Fight logic will use damage dealt to injure to the player
       return enemyDamageDealt;
    }
 
-   // Enemy (potentially) takes damage from Player (needs to be implemented here) and enemy's health is updated
+   // Enemy (potentially) takes damage from Player and enemy's health is updated
    public int damageTakenEnemy(int enemyDamageTaken) {
       this.enemyHealth -= enemyDamageTaken;
       
       return enemyHealth;
    }
 
-   // Enemy (potentially) dies and drops a health potion
+   // Enemy dies and (potentially) drops a health potion
    public int enemyDefeatedPotionDropChance() {
       System.out.printf("\tYou defeated the %s!%n", enemyType);
 

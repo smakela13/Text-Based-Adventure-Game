@@ -37,14 +37,14 @@ public class App {
                 
                 System.out.println(stylizedLine);
                 System.out.println("\tWhat would you like to do?");
-                System.out.println("\t1. Attack!");
-                System.out.println("\t2. Drink a health potion.");
-                System.out.println("\t3. Run!");
+                System.out.println("\t(a) Attack!");
+                System.out.println("\t(d) Drink a health potion.");
+                System.out.println("\t(r) Run!");
 
                 String choice = input.nextLine().trim();
                 
                 switch (choice) {
-                case "1":
+                case "a":
                     int damageDealt = rand.nextInt(playerMaxAttackDamage);
                     int damageTaken;
 
@@ -60,7 +60,7 @@ public class App {
                         break GAME;
                     }
                     break;
-                case "2":
+                case "d":
                     if (playerHealthPotions > 0) {
                         playerHealth += playerHealthPotionHealAmount;
                         playerHealthPotions--;
@@ -69,7 +69,7 @@ public class App {
                         System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                     }
                     break;
-                case "3":
+                case "r":
                     System.out.printf("\tYou ran away from the %s!%n", enemy);
                     continue GAME;
                 default:
@@ -89,16 +89,16 @@ public class App {
             System.out.printf("\tYour health is %d.%n", playerHealth);            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
-            System.out.println("\t1. Continue deeper into the city.");
-            System.out.println("\t2. Live to fight another day.");
+            System.out.println("\t(a) Adventure deeper into the city.");
+            System.out.println("\t(l) Live to fight another day.");
 
             String choice = input.nextLine().trim();
 
             switch (choice) {
-                case "1":
-                    System.out.println("\tYou continue your fight through the city.");
+                case "a":
+                    System.out.println("\tAdvance your fight through the city.");
                     break;
-                case "2":
+                case "l":
                     System.out.println("\tYou live to fight another day.");
                     gameOn = false;
                     break;

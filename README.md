@@ -27,6 +27,8 @@ Definitely want to incorporate this type of movement into the game:
 
    Other ideas:
    - Make the enemy health greater than 25 as a base state
+      - Allow corpses to be found and possible loot if the random roll is a 0.
+      - This can happen by doing two random rolls.
    - Have different player classes
    - Allow player to level up
    - Allow player to choose a weapon
@@ -36,6 +38,7 @@ Definitely want to incorporate this type of movement into the game:
    - Add a story line
    - Add colors to the console text
    - Consequences for running away
+   - Display game stats using a static method
 
    Suggestions:
    - This needs to be broken out of main, this will quickly be unmaintainable
@@ -49,7 +52,6 @@ Definitely want to incorporate this type of movement into the game:
    - Screen clearing used. Clean screen after selection made.
    - UI or "bar" or a section on the side that displays "player" stats. Move that away from the main text logic. Cleaner.
    - Damage dealing and logic around that to another class (Character meta class maybe)?
-   - Choices/actions should be more deterministic. Not just 1/2/3. At least coming from TextBased games. (a)ttack, (d)rink potion, (f)lee etc... makes memorization easier.
    - "Attack"/"Dungeon" text overlay/placement with enemy info as well.
    - Text sections must be broken out. Suggestion to have multiple "layouts"/"layers" to use. Have text from some things fill to some layouts, and other text added to other layouts. Combined with screen clearing gives a illusion of "live program" instead of "line feed program"
    - Input handling should be ideally split to InputHandler class that is initialized at start.
