@@ -43,13 +43,13 @@ public class Enemy {
 
    // Enemy (potentially) dies and drops a health potion
    public int enemyDefeatedPotionDropChance() {
-      System.out.printf("\tYou have defeated the %s!%n", enemyType);
+      System.out.printf("\tYou defeated the %s!%n", enemyType);
 
       int potionDropChance = rand.nextInt(100);
       
       if (potionDropChance < healthPotionDropPercentage) {
          this.enemyDroppedHealthPotions++;
-         System.out.printf("\tThe %s dropped a health potion!%n You now have %d health potions.%n", enemyType,
+         System.out.printf("\tThe %s dropped a health potion!%n%n \tYou now have %d health potions.%n", enemyType,
             enemyDroppedHealthPotions);
       }
       return enemyDroppedHealthPotions;
