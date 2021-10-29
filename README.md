@@ -52,7 +52,6 @@ Definitely want to incorporate this type of movement into the game:
    - Choices/actions should be more deterministic. Not just 1/2/3. At least coming from TextBased games. (a)ttack, (d)rink potion, (f)lee etc... makes memorization easier.
    - "Attack"/"Dungeon" text overlay/placement with enemy info as well.
    - Text sections must be broken out. Suggestion to have multiple "layouts"/"layers" to use. Have text from some things fill to some layouts, and other text added to other layouts. Combined with screen clearing gives a illusion of "live program" instead of "line feed program"
-   - Item drop logic should be tied to Enemy class (since they drop it).
    - Input handling should be ideally split to InputHandler class that is initialized at start.
    - More things. City/Town, Dungeon running (with loot), bars!, permadeath or no (wake up bleeding, wounded in town, % of gold taken) decisions etc.
    - Save and load functionality.
