@@ -39,7 +39,6 @@ Definitely want to incorporate this type of movement into the game:
 
    Suggestions:
    - This needs to be broken out of main, this will quickly be unmaintainable
-   - Enemies should be a class (one for all of them)
    - Player should be an object
    - Print logic should be abstracted from running logic
    - Choice detection logic can shared 
