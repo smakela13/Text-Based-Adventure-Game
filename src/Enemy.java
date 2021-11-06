@@ -14,6 +14,7 @@ public final class Enemy {
    private final int enemyDroppedHealthPotions;
    private static final int HEALTH_POTION_HEAL_AMOUNT = 30;
 
+   // Enemy's constructor that handles the enemy's type, health, and health potions
    private Enemy(Random rand) {
       this(rand,
          Enemy.allEnemies,
@@ -22,10 +23,12 @@ public final class Enemy {
          rand.nextInt(100) < HEALTH_POTION_DROP_PERCENTAGE ? 1 : 0);
    }
 
+   // Enemy's default constructor
    public Enemy() {
       this(new Random());
    }
 
+   // Enemy constructor that are assigned and tests if valid conditions are met
    Enemy(Random rand, String[] enemies, String enemyType, int enemyHealth, int enemyDroppedHealthPotions) {
       if (rand == null) {
          throw new IllegalArgumentException("rand cannot be null");
@@ -66,7 +69,13 @@ public final class Enemy {
    // Enemy (potentially) deals damage to Player
    public int damageDealtEnemy() {
       int enemyDamageDealt = rand.nextInt(ENEMY_MAX_ATTACK_DAMAGE);
-      System.out.printf("\tThe %s deals %d damage to you in return.%n", enemyType, enemyDamageDealt);
+      
+      // Enemy deals damage to Player or doesn't hit the Player
+      if (enemyDamageDealt == 0) {
+         System.out.printf("\tThe %s missed!%n%n", enemyType);
+      } else {
+         System.out.printf("\tThe %s deals %d damage to you in return.%n%n", enemyType, enemyDamageDealt);
+      }
       // Fight logic will use damage dealt to injure to the player
       return enemyDamageDealt;
    }
