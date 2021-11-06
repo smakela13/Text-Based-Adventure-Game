@@ -1,22 +1,60 @@
 import java.util.Random;
 
-public class Enemy {
-   final Random rand = new Random();
+final public class Enemy {
+   final Random rand;
+
    // Enemy variables
-   String[] enemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
-   int maxEnemyHealth = 100;
-   int enemyMaxAttackDamage = 30;
-   private String enemyType;
+   private static String[] allEnemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
+   private String[] enemies;
+   private final static int maxEnemyHealth = 100;
+   private final int enemyMaxAttackDamage = 30;
+   private final String enemyType;
    private int enemyHealth;
-   int healthPotionDropPercentage = 25;
-   int enemyDroppedHealthPotions = 0;
-   int healthPotionHealAmount = 30;
+   private final static int healthPotionDropPercentage = 25;
+   private final int enemyDroppedHealthPotions;
+   private final int healthPotionHealAmount = 30;
+
+   private Enemy(Random rand) {
+      this(rand,
+         Enemy.allEnemies,
+         Enemy.allEnemies[rand.nextInt(Enemy.allEnemies.length)], 
+         rand.nextInt(maxEnemyHealth), 
+         rand.nextInt(100) < healthPotionDropPercentage ? 1 : 0);
+   }
+
+   public Enemy() {
+      this(new Random());
+   }
+
+   Enemy(Random rand, String[] enemies, String enemyType, int enemyHealth, int enemyDroppedHealthPotions) {
+      if (rand == null) {
+         throw new IllegalArgumentException("rand cannot be null");
+      }
+      this.rand = rand;
+      
+      if (enemies == null || enemies.length == 0) {
+         throw new IllegalArgumentException("enemies cannot be null or invalid");
+      }
+      this.enemies = enemies;
+
+      if (enemyType == null || enemyType.trim().isEmpty()) {
+         throw new IllegalArgumentException("enemyType cannot be null or empty");
+      }
+      this.enemyType = enemyType;
+
+      if (enemyHealth < 0 || enemyHealth > maxEnemyHealth) {
+         throw new IllegalArgumentException("enemyHealth cannot be invalid");
+      }
+      this.enemyHealth = enemyHealth;
+
+      if (enemyDroppedHealthPotions < 0) {
+         throw new IllegalArgumentException("enemyDroppedHealthPotions cannot be negative");
+      }
+      this.enemyDroppedHealthPotions = enemyDroppedHealthPotions;
+   }
 
    // Enemy appears to Player
    public void selectRandomEnemy() {
-      this.enemyHealth = rand.nextInt(maxEnemyHealth);
-      setEnemyType(enemies[rand.nextInt(enemies.length)]);
-      
       System.out.printf("\t~* You found a %s! *~%n", enemyType);
    }
 
@@ -43,13 +81,9 @@ public class Enemy {
    // Enemy dies and (potentially) drops a health potion
    public int enemyDefeatedPotionDropChance() {
       System.out.printf("\tYou defeated the %s!%n", enemyType);
-
-      int potionDropChance = rand.nextInt(100);
       
-      if (potionDropChance < healthPotionDropPercentage) {
-         this.enemyDroppedHealthPotions++;
-         System.out.printf("\tThe %s dropped a health potion!%n%n \tYou now have %d health potions.%n", enemyType,
-            enemyDroppedHealthPotions);
+      if (enemyDroppedHealthPotions > 0) {
+         System.out.printf("\tThe %s dropped a health potion!%n%n", enemyType);
       }
       return enemyDroppedHealthPotions;
    }
@@ -59,15 +93,39 @@ public class Enemy {
       return enemyType;
    }
 
-   public void setEnemyType(String enemyType) {
-      this.enemyType = enemyType;
-   }
-
    public int getEnemyHealth() {
       return enemyHealth;
    }
 
    public void setEnemyHealth(int enemyHealth) {
       this.enemyHealth = enemyHealth;
+   }
+
+   public String[] getEnemies() {
+      return enemies;
+   }
+
+   public void setEnemies(String[] enemies) {
+      this.enemies = enemies;
+   }
+
+   public int getMaxEnemyHealth() {
+      return maxEnemyHealth;
+   }
+
+   public int getEnemyMaxAttackDamage() {
+      return enemyMaxAttackDamage;
+   }
+
+   public int getHealthPotionDropPercentage() {
+      return healthPotionDropPercentage;
+   }
+
+   public int getEnemyDroppedHealthPotions() {
+      return enemyDroppedHealthPotions;
+   }
+
+   public int getHealthPotionHealAmount() {
+      return healthPotionHealAmount;
    }
 }
