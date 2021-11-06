@@ -2,10 +2,9 @@ import java.util.Random;
 import java.util.Scanner;
 
 enum GameLoopState {
-    player_died,
-    player_ran,
-    enemy_died,
+    PLAYER_DIED, PLAYER_RAN, ENEMY_DIED
 }
+
 class Foo {
     public static GameLoopState fightLoop(Scanner input, Random rand, Enemy enemy, Player player, String stylizedLine) {
         while (enemy.getEnemyHealth() > 0) {
@@ -15,15 +14,16 @@ class Foo {
             enemy.discoverEnemyHealth();
 
             System.out.println(stylizedLine);
-            System.out.println("\tWhat would you like to do?");
-            System.out.println("\t(a) Attack!");
-            System.out.println("\t(d) Drink a health potion.");
-            System.out.println("\t(r) Run!");
+            InputOption[] options = {
+                new InputOption('a', "Attack!"),
+                new InputOption('d', "Drink a health potion."),
+                new InputOption('r', "Run!"),
+            };
+            InputHandler inputHandler = new InputHandler(input);
+            InputOption chosenOption = inputHandler.promptUser(options, "\tWhat would you like to do?");
 
-            String choice = input.nextLine().trim();
-
-            switch (choice) {
-            case "a":
+            switch (chosenOption.getAlias()) {
+            case 'a':
                 int damageDealt = rand.nextInt(Player.getMaxAttackDamage());
                 int damageTaken;
 
@@ -36,10 +36,10 @@ class Foo {
 
                 if (player.isDead()) {
                     System.out.println("\tYou have taken too much damage.");
-                    return GameLoopState.player_died;
+                    return GameLoopState.PLAYER_DIED;
                 }
                 break;
-            case "d":
+            case 'd':
                 if (player.hasHealthPotions()) {
                     player.useHealthPotion();
                     System.out.printf(
@@ -49,15 +49,14 @@ class Foo {
                     System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                 }
                 continue;
-            case "r":
+            case 'r':
                 System.out.printf("\tYou ran away from the %s!%n", enemy);
-                return GameLoopState.player_ran;
+                return GameLoopState.PLAYER_RAN;
             default:
-                System.out.println("\tPlease enter a valid input.");
                 continue;
             }
         }
-        return GameLoopState.enemy_died;
+        return GameLoopState.ENEMY_DIED;
     }
 }
 public class App {
@@ -72,7 +71,7 @@ public class App {
         // Game running boolean
         boolean gameOn = true;
 
-        System.out.println("\t~* Welcome to the Darkness! *~");
+        System.out.println("\n\t~* Welcome to the Darkness! *~");
 
         while (gameOn) {
             System.out.println(stylizedLine);
@@ -82,16 +81,14 @@ public class App {
 
             GameLoopState result = Foo.fightLoop(input, rand, enemy, player, stylizedLine);
 
-            if (result == GameLoopState.player_died) {
+            if (result == GameLoopState.PLAYER_DIED) {
                 System.out.println("\tYou limp into the shadows weak and bloody.");
                 break;
-            } else if (result == GameLoopState.enemy_died && enemy.enemyDefeatedPotionDropChance() > 0) {
+            } else if (result == GameLoopState.ENEMY_DIED && enemy.enemyDefeatedPotionDropChance() > 0) {
                 player.receiveHealthPotion();
             }
 
-            
             System.out.println(stylizedLine);
-            
             System.out.printf("\tYour health is %d.%n", player.getHealth());            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
