@@ -1,25 +1,25 @@
 import java.util.Random;
 
-final public class Enemy {
+public final class Enemy {
    final Random rand;
 
    // Enemy variables
    private static String[] allEnemies = { "Vampire", "Zombie", "Werewolf", "Ghoul", "Mage", "Ghost", "Mummy", "Revenant", "Hunter" };
    private String[] enemies;
-   private final static int maxEnemyHealth = 100;
-   private final int enemyMaxAttackDamage = 30;
+   private static final int MAX_ENEMY_HEALTH = 100;
+   private static final int ENEMY_MAX_ATTACK_DAMAGE = 30;
    private final String enemyType;
    private int enemyHealth;
-   private final static int healthPotionDropPercentage = 25;
+   private static final int HEALTH_POTION_DROP_PERCENTAGE = 25;
    private final int enemyDroppedHealthPotions;
-   private final int healthPotionHealAmount = 30;
+   private static final int HEALTH_POTION_HEAL_AMOUNT = 30;
 
    private Enemy(Random rand) {
       this(rand,
          Enemy.allEnemies,
          Enemy.allEnemies[rand.nextInt(Enemy.allEnemies.length)], 
-         rand.nextInt(maxEnemyHealth), 
-         rand.nextInt(100) < healthPotionDropPercentage ? 1 : 0);
+         rand.nextInt(MAX_ENEMY_HEALTH), 
+         rand.nextInt(100) < HEALTH_POTION_DROP_PERCENTAGE ? 1 : 0);
    }
 
    public Enemy() {
@@ -42,7 +42,7 @@ final public class Enemy {
       }
       this.enemyType = enemyType;
 
-      if (enemyHealth < 0 || enemyHealth > maxEnemyHealth) {
+      if (enemyHealth < 0 || enemyHealth > MAX_ENEMY_HEALTH) {
          throw new IllegalArgumentException("enemyHealth cannot be invalid");
       }
       this.enemyHealth = enemyHealth;
@@ -65,7 +65,7 @@ final public class Enemy {
 
    // Enemy (potentially) deals damage to Player
    public int damageDealtEnemy() {
-      int enemyDamageDealt = rand.nextInt(enemyMaxAttackDamage);
+      int enemyDamageDealt = rand.nextInt(ENEMY_MAX_ATTACK_DAMAGE);
       System.out.printf("\tThe %s deals %d damage to you in return.%n", enemyType, enemyDamageDealt);
       // Fight logic will use damage dealt to injure to the player
       return enemyDamageDealt;
@@ -110,15 +110,15 @@ final public class Enemy {
    }
 
    public int getMaxEnemyHealth() {
-      return maxEnemyHealth;
+      return MAX_ENEMY_HEALTH;
    }
 
    public int getEnemyMaxAttackDamage() {
-      return enemyMaxAttackDamage;
+      return ENEMY_MAX_ATTACK_DAMAGE;
    }
 
    public int getHealthPotionDropPercentage() {
-      return healthPotionDropPercentage;
+      return HEALTH_POTION_DROP_PERCENTAGE;
    }
 
    public int getEnemyDroppedHealthPotions() {
@@ -126,6 +126,6 @@ final public class Enemy {
    }
 
    public int getHealthPotionHealAmount() {
-      return healthPotionHealAmount;
+      return HEALTH_POTION_HEAL_AMOUNT;
    }
 }
