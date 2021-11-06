@@ -1,6 +1,65 @@
 import java.util.Random;
 import java.util.Scanner;
 
+enum GameLoopState {
+    player_died,
+    player_ran,
+    enemy_died,
+}
+class Foo {
+    public static GameLoopState fightLoop(Scanner input, Random rand, Enemy enemy, Player player, String stylizedLine) {
+        while (enemy.getEnemyHealth() > 0) {
+            System.out.println();
+            System.out.printf("\tYour health is %d.%n", player.getHealth());
+
+            enemy.discoverEnemyHealth();
+
+            System.out.println(stylizedLine);
+            System.out.println("\tWhat would you like to do?");
+            System.out.println("\t(a) Attack!");
+            System.out.println("\t(d) Drink a health potion.");
+            System.out.println("\t(r) Run!");
+
+            String choice = input.nextLine().trim();
+
+            switch (choice) {
+            case "a":
+                int damageDealt = rand.nextInt(Player.getMaxAttackDamage());
+                int damageTaken;
+
+                System.out.println(stylizedLine);
+                System.out.printf("\tYou dealt %d damage to the %s.%n", damageDealt, enemy.getEnemyType());
+
+                damageTaken = enemy.damageDealtEnemy();
+                enemy.damageTakenEnemy(damageDealt);
+                player.takeDamage(damageTaken);
+
+                if (player.isDead()) {
+                    System.out.println("\tYou have taken too much damage.");
+                    return GameLoopState.player_died;
+                }
+                break;
+            case "d":
+                if (player.hasHealthPotions()) {
+                    player.useHealthPotion();
+                    System.out.printf(
+                            "\tYou drank a health potion.%n \tYour health is now %d.%n \tYou have %d health potions.%n",
+                            player.getHealth(), player.getHealthPotions());
+                } else {
+                    System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
+                }
+                continue;
+            case "r":
+                System.out.printf("\tYou ran away from the %s!%n", enemy);
+                return GameLoopState.player_ran;
+            default:
+                System.out.println("\tPlease enter a valid input.");
+                continue;
+            }
+        }
+        return GameLoopState.enemy_died;
+    }
+}
 public class App {
     public static void main(String[] args) {
         // System objects and variables
@@ -8,85 +67,32 @@ public class App {
         final Random rand = new Random();
         String stylizedLine = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~";
 
-        // Enemy variables
-        int maxEnemyHealth = 100;
-
-        // Player variables
-        int playerHealth = 100;
-        int playerMaxAttackDamage = 50;
-        int playerHealthPotions = 1;
-        int playerHealthPotionHealAmount = 30;
+        final Player player = new Player();
 
         // Game running boolean
         boolean gameOn = true;
 
         System.out.println("\t~* Welcome to the Darkness! *~");
 
-        GAME: while (gameOn) {
+        while (gameOn) {
             System.out.println(stylizedLine);
 
             Enemy enemy = new Enemy();
             enemy.selectRandomEnemy();
-            int enemyHealth = rand.nextInt(maxEnemyHealth);
 
-            while (enemyHealth > 0) {
-                System.out.println();
-                System.out.printf("\tYour health is %d.%n", playerHealth);
-                
-                enemy.discoverEnemyHealth();
-                
-                System.out.println(stylizedLine);
-                System.out.println("\tWhat would you like to do?");
-                System.out.println("\t(a) Attack!");
-                System.out.println("\t(d) Drink a health potion.");
-                System.out.println("\t(r) Run!");
+            GameLoopState result = Foo.fightLoop(input, rand, enemy, player, stylizedLine);
 
-                String choice = input.nextLine().trim();
-                
-                switch (choice) {
-                case "a":
-                    int damageDealt = rand.nextInt(playerMaxAttackDamage);
-                    int damageTaken;
-
-                    System.out.println(stylizedLine);
-                    System.out.printf("\tYou dealt %d damage to the %s.%n", damageDealt, enemy.getEnemyType());
-
-                    damageTaken = enemy.damageDealtEnemy();
-                    enemyHealth = enemy.damageTakenEnemy(damageDealt);
-                    playerHealth -= damageTaken;
-
-                    if (playerHealth < 1) {
-                        System.out.println("\tYou have taken too much damage.");
-                        break GAME;
-                    }
-                    break;
-                case "d":
-                    if (playerHealthPotions > 0) {
-                        playerHealth += playerHealthPotionHealAmount;
-                        playerHealthPotions--;
-                        System.out.printf("\tYou drank a health potion.%n \tYour health is now %d.%n \tYou have %d health potions.%n", playerHealth, playerHealthPotions);
-                    } else {
-                        System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
-                    }
-                    break;
-                case "r":
-                    System.out.printf("\tYou ran away from the %s!%n", enemy);
-                    continue GAME;
-                default:
-                    System.out.println("\tPlease enter a valid input.");
-                    break;
-                }
-            }
-
-            if (playerHealth < 1) {
+            if (result == GameLoopState.player_died) {
                 System.out.println("\tYou limp into the shadows weak and bloody.");
                 break;
+            } else if (result == GameLoopState.enemy_died && enemy.enemyDefeatedPotionDropChance() > 0) {
+                player.receiveHealthPotion();
             }
+
+            
             System.out.println(stylizedLine);
-            if (enemyHealth < 1) {
-                playerHealthPotions += enemy.enemyDefeatedPotionDropChance();
-            }
-            System.out.printf("\tYour health is %d.%n", playerHealth);            
+            
+            System.out.printf("\tYour health is %d.%n", player.getHealth());            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
             System.out.println("\t(a) Adventure deeper into the city.");
