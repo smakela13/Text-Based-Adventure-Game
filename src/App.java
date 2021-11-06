@@ -17,7 +17,7 @@ class Foo {
             InputOption[] options = {
                 new InputOption('a', "Attack!"),
                 new InputOption('d', "Drink a health potion."),
-                new InputOption('r', "Run!"),
+                    new InputOption('r', "Run!") 
             };
             InputHandler inputHandler = new InputHandler(input);
             InputOption chosenOption = inputHandler.promptUser(options, "\tWhat would you like to do?");
@@ -42,15 +42,17 @@ class Foo {
             case 'd':
                 if (player.hasHealthPotions()) {
                     player.useHealthPotion();
-                    System.out.printf(
-                            "\tYou drank a health potion.%n \tYour health is now %d.%n \tYou have %d health potions.%n",
-                            player.getHealth(), player.getHealthPotions());
+                    System.out.println(stylizedLine);
+                    System.out.printf("\tYou drank a health potion.%n%n \tYour health is now %d.%n \tYou have %d health potions.%n",
+                    player.getHealth(), player.getHealthPotions());
                 } else {
+                    System.out.println(stylizedLine);
                     System.out.println("\tYou have no health potions left. Defeat enemies to find more!");
                 }
                 continue;
             case 'r':
-                System.out.printf("\tYou ran away from the %s!%n", enemy);
+                System.out.println(stylizedLine);
+                System.out.printf("\tYou ran away from the %s!%n%n", enemy.getEnemyType());
                 return GameLoopState.PLAYER_RAN;
             default:
                 continue;
@@ -59,6 +61,7 @@ class Foo {
         return GameLoopState.ENEMY_DIED;
     }
 }
+
 public class App {
     public static void main(String[] args) {
         // System objects and variables
@@ -88,7 +91,6 @@ public class App {
                 player.receiveHealthPotion();
             }
 
-            System.out.println(stylizedLine);
             System.out.printf("\tYour health is %d.%n", player.getHealth());            
             System.out.println(stylizedLine);
             System.out.println("\tDo you want to keep playing?");
@@ -110,6 +112,7 @@ public class App {
                     break;
             }
         }
+        
         input.close();
 
         System.out.println(stylizedLine);
