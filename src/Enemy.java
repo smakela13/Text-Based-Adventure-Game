@@ -58,7 +58,7 @@ public final class Enemy {
 
    // Enemy appears to Player
    public void selectRandomEnemy() {
-      System.out.printf("\t~* You found a %s! *~%n", enemyType);
+      System.out.printf("\t~* You found a %s! *~%n%n", enemyType);
    }
 
    // Enemy's health revealed to Player

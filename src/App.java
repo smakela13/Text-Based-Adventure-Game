@@ -8,7 +8,6 @@ enum GameLoopState {
 class Foo {
     public static GameLoopState fightLoop(Scanner input, Random rand, Enemy enemy, Player player, String stylizedLine) {
         while (enemy.getEnemyHealth() > 0) {
-            System.out.println();
             System.out.printf("\tYour health is %d.%n", player.getHealth());
 
             enemy.discoverEnemyHealth();
